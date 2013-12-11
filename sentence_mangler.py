@@ -5,7 +5,7 @@
 
 import re, collections, difflib, random, multiprocessing, threading, Queue
 
-def words(text): return re.findall('[a-z]+', text.lower()) 
+def words(text): return re.findall("[a-z']+", text.lower()) 
 
 THREAD_SCALE = 2
 WORDS = words(file('words.txt').read())
@@ -20,7 +20,7 @@ def get_words(cpu, word):
 	start_from = cpu * WORD_SPLIT
 	#print "Thread {0} Starting from: {1}".format(cpu, start_from)
 
-	THREAD_MATCHES.put(difflib.get_close_matches(word, WORDS[start_from:WORD_SPLIT], 10))
+	THREAD_MATCHES.put(difflib.get_close_matches(word, WORDS[start_from:WORD_SPLIT], 10, 0.7))
 
 def similar_word(word):
 	global THREAD_MATCHES
